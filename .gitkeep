@@ -1,0 +1,1 @@
+"docs","esp32","simulator","infrastructure/grafana","infrastructure/influxdb","infrastructure/rabbitmq","services/alert-service","services/ingestion-service","services/notification-service","services/rest-api/tests" | ForEach-Object { New-Item -ItemType File -Path "$_/.gitkeep" -Force }
