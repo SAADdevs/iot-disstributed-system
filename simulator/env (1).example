@@ -1,0 +1,10 @@
+# Copy this file to ".env" and replace the values. Never commit ".env" to git.
+
+RABBITMQ_HOST=localhost
+RABBITMQ_USERNAME=guest
+RABBITMQ_PASSWORD=guest
+
+INFLUXDB_TOKEN=your-token-here
+INFLUXDB_ORG=your-organization-here
+
+SENSOR_COUNT=1
