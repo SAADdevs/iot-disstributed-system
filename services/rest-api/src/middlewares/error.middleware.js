@@ -18,6 +18,15 @@ function errorHandler(err, req, res, next) {
     });
   }
 
+    // InfluxDB ma khddmch => 503
+  if (err.status === 503) {
+    console.error(err.cause || err);
+    return res.status(503).json({
+      error: 'Service Unavailable',
+      message: err.message,
+    });
+  }
+
   const status = err.status || err.statusCode || 500;
 
   // Ma n3rdoch details teqniyin f 500 (sécurité)

@@ -1,14 +1,13 @@
 const express = require('express');
 const cors = require('cors');
+const sensorRoutes = require('./routes/sensor.routes');
 const { notFoundHandler, errorHandler } = require('./middlewares/error.middleware');
 
 const app = express();
 
-// Middlewares globaux
 app.use(cors());
 app.use(express.json());
 
-// Health check
 app.get('/health', (req, res) => {
   res.status(200).json({
     status: 'ok',
@@ -18,9 +17,10 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Routes (ghanzidohom f lkhtwat jayin)
+// Routes
+app.use('/api/sensors', sensorRoutes);
 
-// Khass ykono f lakhr, b had tartib
+// Khass ykono f lakhr
 app.use(notFoundHandler);
 app.use(errorHandler);
 
