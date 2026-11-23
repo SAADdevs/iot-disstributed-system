@@ -81,4 +81,4 @@ async function getMeasurementHistory({ sensorId, from, to, limit }) {
   };
 }
 
-module.exports = { getLatestMeasurement, getMeasurementHistory };
+module.exports = { getLatestMeasurement, getMeasurementHistory, runQuery, fieldsFilter, FIELDS };
