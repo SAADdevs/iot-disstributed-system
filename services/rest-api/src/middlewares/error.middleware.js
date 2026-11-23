@@ -6,8 +6,13 @@ function notFoundHandler(req, res) {
   });
 }
 
+const ERROR_LABELS = {
+  400: 'Bad Request',
+  404: 'Not Found',
+  503: 'Service Unavailable',
+};
+
 // Gestion centralisée dyal ga3 les erreurs
-// (khass 4 paramètres bach Express ya3rf bli hada error handler)
 // eslint-disable-next-line no-unused-vars
 function errorHandler(err, req, res, next) {
   // Erreurs dyal validation Joi => 400
@@ -18,26 +23,17 @@ function errorHandler(err, req, res, next) {
     });
   }
 
-    // InfluxDB ma khddmch => 503
-  if (err.status === 503) {
-    console.error(err.cause || err);
-    return res.status(503).json({
-      error: 'Service Unavailable',
-      message: err.message,
-    });
-  }
-
   const status = err.status || err.statusCode || 500;
 
-  // Ma n3rdoch details teqniyin f 500 (sécurité)
-  const message = status >= 500 ? 'Internal Server Error' : err.message;
-
+  // Ma n3rdoch details teqniyin f 5xx (sécurité), ghir f console
   if (status >= 500) {
-    console.error(err);
+    console.error(err.cause || err);
   }
 
+  const message = status === 503 ? err.message : status >= 500 ? 'Internal Server Error' : err.message;
+
   res.status(status).json({
-    error: status >= 500 ? 'Internal Server Error' : 'Bad Request',
+    error: ERROR_LABELS[status] || (status >= 500 ? 'Internal Server Error' : 'Error'),
     message,
   });
 }
