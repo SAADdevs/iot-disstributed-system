@@ -6,4 +6,15 @@ async function getLatest(req, res) {
   res.status(200).json(data);
 }
 
-module.exports = { getLatest };
+async function getHistory(req, res) {
+  const { sensor_id, from, to, limit } = res.locals.query;
+  const data = await measurementService.getMeasurementHistory({
+    sensorId: sensor_id,
+    from,
+    to,
+    limit,
+  });
+  res.status(200).json(data);
+}
+
+module.exports = { getLatest, getHistory };
