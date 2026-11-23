@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const sensorRoutes = require('./routes/sensor.routes');
 const measurementRoutes = require('./routes/measurement.routes');
+const thresholdRoutes = require('./routes/threshold.routes');
 const { notFoundHandler, errorHandler } = require('./middlewares/error.middleware');
 
 const app = express();
@@ -21,6 +22,7 @@ app.get('/health', (req, res) => {
 // Routes
 app.use('/api/sensors', sensorRoutes);
 app.use('/api/measurements', measurementRoutes);
+app.use('/api/thresholds', thresholdRoutes);
 
 // Khass ykono f lakhr
 app.use(notFoundHandler);

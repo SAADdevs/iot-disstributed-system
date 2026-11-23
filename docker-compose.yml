@@ -93,6 +93,9 @@ services:
       INFLUX_BUCKET: ${INFLUX_BUCKET}
       INFLUX_MEASUREMENT: ${INFLUX_MEASUREMENT:-sensors}
       SENSOR_ACTIVE_MINUTES: ${SENSOR_ACTIVE_MINUTES:-5}
+      THRESHOLDS_FILE: /app/data/thresholds.json
+    volumes:
+      - rest_api_data:/app/data
     depends_on:
       influxdb:
         condition: service_healthy
@@ -105,3 +108,4 @@ networks:
 volumes:
   influxdb_data:
   rabbitmq_data:
+  rest_api_data:
