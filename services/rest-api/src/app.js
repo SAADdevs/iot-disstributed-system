@@ -1,0 +1,33 @@
+const express = require('express');
+const cors = require('cors');
+const sensorRoutes = require('./routes/sensor.routes');
+const measurementRoutes = require('./routes/measurement.routes');
+const thresholdRoutes = require('./routes/threshold.routes');
+const alertRoutes = require('./routes/alert.routes');
+const { notFoundHandler, errorHandler } = require('./middlewares/error.middleware');
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    service: 'rest-api',
+    uptime_seconds: Math.floor(process.uptime()),
+    timestamp: new Date().toISOString(),
+  });
+});
+
+// Routes
+app.use('/api/sensors', sensorRoutes);
+app.use('/api/measurements', measurementRoutes);
+app.use('/api/thresholds', thresholdRoutes);
+app.use('/api/alerts', alertRoutes);
+
+// Khass ykono f lakhr
+app.use(notFoundHandler);
+app.use(errorHandler);
+
+module.exports = app;
